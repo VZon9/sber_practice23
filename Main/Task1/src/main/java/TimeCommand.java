@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 public class TimeCommand implements Command{
 
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+    private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     @Override
     public void Execute(String parameter) {
@@ -14,6 +14,9 @@ public class TimeCommand implements Command{
         }
         else if (parameter.equals("-h")){
             System.out.println(TimeCommandHelp());
+        }
+        else{
+            Shall.PrintErrorUnknownCommand();
         }
     }
 

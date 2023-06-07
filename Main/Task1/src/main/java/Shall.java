@@ -10,15 +10,21 @@ public class Shall {
         for(String command: CommandManager.keySet()){
             System.out.println(command);
         }
-        System.out.println("each of these commands has a parameter -h");
+        System.out.println("each of these commands has help parameter -h");
         System.out.println("example: \"command\" -h");
     }
 
     public static void main(String[] args) {
         Command time = new TimeCommand();
         CommandManager.put(time.GetName(), time);
-        Scanner in = new Scanner(System.in);
+        Command data = new DataCommand();
+        CommandManager.put(data.GetName(), data);
+        Command ls = new LsCommand();
+        CommandManager.put(ls.GetName(), ls);
+        Command quit = new QuitCommand();
+        CommandManager.put(quit.GetName(), quit);
 
+        Scanner in = new Scanner(System.in);
         String currCommand;
         String[] SplitCommand;
 
