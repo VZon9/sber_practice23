@@ -7,11 +7,6 @@ public class Group {
     private String name;
     private List<Album> albumList;
 
-    public Group(int id, String name, List<Album> albumList) {
-        this.id = id;
-        this.name = name;
-        this.albumList = albumList;
-    }
 
     public int getId() {
         return id;

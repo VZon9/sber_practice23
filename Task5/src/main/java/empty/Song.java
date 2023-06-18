@@ -21,11 +21,6 @@ public class Song {
         this.name = name;
     }
 
-    public Song(int id, String name, String duration) {
-        this.id = id;
-        this.name = name;
-        this.duration = duration;
-    }
 
     public String getDuration() {
         return duration;

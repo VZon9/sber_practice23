@@ -8,12 +8,6 @@ public class Album {
     private int year;
     private List<Song> songList;
 
-    public Album(int id, String name, int year, List<Song> songList) {
-        this.id = id;
-        this.name = name;
-        this.year = year;
-        this.songList = songList;
-    }
 
     public int getId() {
         return id;

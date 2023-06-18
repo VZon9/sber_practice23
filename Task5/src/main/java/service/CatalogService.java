@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Service
 public class CatalogService {
-    private Map<Integer, Group> groupMap = Map.of(1,  new Group(1, "Hajime", new ArrayList<>(){{add(new Album(1, "Buster", 2015, new ArrayList<>(){{add(new Song(1, "gory", "2:56"));}}));}}));
+    private Map<Integer, Group> groupMap;
 
 
     public List<Group> getAllGroups(){
