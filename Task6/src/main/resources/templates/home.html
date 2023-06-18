@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h2>Groups:</h2>
+<br>
+<tr>
+    <td th:each="group : ${groups}">
+        <a th:href="@{/group/{groupId}(groupId=${group.id})}" th:text="${group.name}"></a>
+    </td>
+</tr>
+
+<br>
+<br>
+<br>
+
+<form action="#" th:action="@{/group}" th:object="${group}" method="post">
+    <label for="id">Id:</label>
+    <input type="text"   th:field="*{id}" id="id">
+    <br>
+    <label for="name">Name</label>
+    <input type="text" th:field="*{name}" id="name">
+    <br>
+    <input type="submit" value="Add artist">
+</form>
+
+
+
+</body>
+</html>
