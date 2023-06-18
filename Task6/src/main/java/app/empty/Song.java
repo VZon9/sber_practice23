@@ -1,12 +1,9 @@
-package empty;
+package app.empty;
 
-import java.util.List;
-
-public class Group {
+public class Song {
     private int id;
     private String name;
-    private List<Album> albumList;
-
+    private String duration;
 
     public int getId() {
         return id;
@@ -24,11 +21,12 @@ public class Group {
         this.name = name;
     }
 
-    public List<Album> getAlbumList() {
-        return albumList;
+
+    public String getDuration() {
+        return duration;
     }
 
-    public void setAlbumList(List<Album> albumList) {
-        this.albumList = albumList;
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 }

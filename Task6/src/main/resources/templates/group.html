@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h2 th:text="${group.name}"></h2>
+<br>
+<li th:each="album : ${group.albumList}">
+    <a th:href="@{/group/{groupId}/album/{albumId}(groupId=${group.id}, albumId=${album.id})}" th:text="${album.name}"></a>
+    <a th:text="${album.year}"></a>
+</li>
+
+<br>
+<br>
+<br>
+
+<form th:action="@{/group/{groupId}/album(groupId=${group.id})}" th:object="${album}" method="post">
+    <label for="id">Id:</label>
+    <input type="text"  th:field="*{id}" id="id">
+    <br>
+    <label for="name">Name:</label>
+    <input type="text" th:field="*{name}" id="name">
+    <br>
+    <label for="year">Year:</label>
+    <input type="text" th:field="*{year}" id="year">
+    <br>
+    <input type="submit" value="Add album">
+</form>
+
+
+</body>
+</html>

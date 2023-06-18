@@ -3,17 +3,15 @@
 <body>
 <h2>Groups:</h2>
 <br>
-<tr>
-    <td th:each="group : ${groups}">
-        <a th:href="@{/group/{groupId}(groupId=${group.id})}" th:text="${group.name}"></a>
-    </td>
-</tr>
+<li th:each="group : ${groups}">
+    <a th:href="@{/group/{groupId}(groupId=${group.id})}" th:text="${group.name}"></a>
+</li>
 
 <br>
 <br>
 <br>
 
-<form action="#" th:action="@{/group}" th:object="${group}" method="post">
+<form th:action="@{/group}" th:object="${group}" method="post">
     <label for="id">Id:</label>
     <input type="text"   th:field="*{id}" id="id">
     <br>

@@ -1,4 +1,4 @@
-package empty;
+package app.empty;
 
 import java.util.List;
 
