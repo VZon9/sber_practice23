@@ -31,6 +31,10 @@ public class CatalogService {
         return group;
     }
 
+    public void delGroup(int id){
+        groupMap.remove(id);
+    }
+
 
     public Album getAlbum(int groupId, int albumId){
         Group group = groupMap.get(groupId);
@@ -49,7 +53,7 @@ public class CatalogService {
     public Album addAlbum(int groupId, Album album){
         Group group = groupMap.get(groupId);
         if (group != null) {
-            List albumList = group.getAlbumList();
+            List<Album> albumList = group.getAlbumList();
             if (albumList == null){
                 albumList = new ArrayList<>();
                 group.setAlbumList(albumList);
@@ -58,6 +62,20 @@ public class CatalogService {
             return album;
         }
         return null;
+    }
+
+    public void delAlbum(int groupId, int albumId){
+        Group group = groupMap.get(groupId);
+        if (group != null) {
+            int c = 0;
+            for(Album album:group.getAlbumList()){
+                if (album.getId() != albumId){
+                    c++;
+                }
+                else break;
+            }
+            group.getAlbumList().remove(c);
+        }
     }
 
     public Song getSong(int groupId, int albumId, int songId){
@@ -88,6 +106,17 @@ public class CatalogService {
         return null;
     }
 
-
-
+    public void delSong(int groupId, int albumId, int songId){
+        Album album = getAlbum(groupId, albumId);
+        if (album != null){
+            int c = 0;
+            for(Song song: album.getSongList()){
+                if (song.getId() != songId){
+                    c++;
+                }
+                else break;
+            }
+            album.getSongList().remove(c);
+        }
+    }
 }

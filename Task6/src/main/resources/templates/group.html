@@ -5,7 +5,8 @@
 <br>
 <li th:each="album : ${group.albumList}">
     <a th:href="@{/group/{groupId}/album/{albumId}(groupId=${group.id}, albumId=${album.id})}" th:text="${album.name}"></a>
-    <a th:text="${album.year}"></a>
+    <span>- <span th:text="${album.year}"></span></span>
+    <span>(Id:<span th:text="${album.id}"></span>)</span>
 </li>
 
 <br>
@@ -22,9 +23,19 @@
     <label for="year">Year:</label>
     <input type="text" th:field="*{year}" id="year">
     <br>
-    <input type="submit" value="Add album">
+    <button type="submit">Add album</button>
 </form>
 
+<br>
+<br>
+<br>
+
+<form th:action="@{/group/{groupId}/album/del(groupId=${groupId})}" th:object="${album}" method="post">
+    <label for="idDel">Id:</label>
+    <input type="text"  th:field="*{id}" id="idDel">
+    <br>
+    <button type="submit">Delete album</button>
+</form>
 
 </body>
 </html>

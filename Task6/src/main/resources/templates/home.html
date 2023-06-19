@@ -5,6 +5,7 @@
 <br>
 <li th:each="group : ${groups}">
     <a th:href="@{/group/{groupId}(groupId=${group.id})}" th:text="${group.name}"></a>
+    <span>(Id:<span th:text="${group.id}"></span>)</span>
 </li>
 
 <br>
@@ -18,10 +19,19 @@
     <label for="name">Name</label>
     <input type="text" th:field="*{name}" id="name">
     <br>
-    <input type="submit" value="Add artist">
+    <button type="submit">Add group</button>
 </form>
 
+<br>
+<br>
+<br>
 
+<form th:action="@{/group/del}" th:object="${group}" method="post">
+    <label for="idDel">Id:</label>
+    <input type="text"  th:field="*{id}" id="idDel">
+    <br>
+    <button type="submit">Delete group</button>
+</form>
 
 </body>
 </html>

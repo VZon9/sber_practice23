@@ -6,10 +6,7 @@ import app.empty.Song;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import app.service.CatalogService;
 
 @Controller
@@ -31,6 +28,12 @@ public class MusicController {
         return "redirect:/home";
     }
 
+    @PostMapping("/group/del")
+    public String delGroup(@ModelAttribute Group group){
+        service.delGroup(group.getId());
+        return "redirect:/home";
+    }
+
     @GetMapping("/group/{groupId}")
     public String getGroup(@PathVariable int groupId, Model model){
         model.addAttribute("group", service.getGroup(groupId));
@@ -41,6 +44,12 @@ public class MusicController {
     @PostMapping("/group/{groupId}/album")
     public String addAlbum(@PathVariable int groupId, @ModelAttribute Album album) {
         service.addAlbum(groupId, album);
+        return "redirect:/group/" + groupId;
+    }
+
+    @PostMapping("/group/{groupId}/album/del")
+    public String delAlbum(@PathVariable int groupId, @ModelAttribute Album album){
+        service.delAlbum(groupId, album.getId());
         return "redirect:/group/" + groupId;
     }
 
@@ -58,6 +67,12 @@ public class MusicController {
     @PostMapping("/group/{groupId}/album/{albumId}/song")
     public String addSong(@PathVariable int groupId, @PathVariable int albumId, @ModelAttribute Song song) {
         service.addSong(groupId, albumId, song);
+        return "redirect:/group/" + groupId + "/album/" + albumId;
+    }
+
+    @PostMapping("/group/{groupId}/album/{albumId}/song/del")
+    public String delSong(@PathVariable int groupId, @PathVariable int albumId, @ModelAttribute Song song) {
+        service.delSong(groupId, albumId, song.getId());
         return "redirect:/group/" + groupId + "/album/" + albumId;
     }
 
