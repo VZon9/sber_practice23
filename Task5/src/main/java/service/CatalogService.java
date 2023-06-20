@@ -107,7 +107,6 @@ public class CatalogService {
             }
             album.getSongList().remove(c);
         }
-
     }
 
 

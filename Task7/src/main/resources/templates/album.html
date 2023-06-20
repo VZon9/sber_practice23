@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h2 th:text="${album.name}"></h2>
+<br>
+<li th:each="song : ${songs}">
+    <a th:href="@{/group/{groupId}/album/{albumId}/song/{songId}(groupId=${group.id}, albumId=${album.id}, songId=${song.id})}" th:text="${song.name}"></a>
+    <span>(Id:<span th:text="${song.id}"></span>)</span>
+</li>
+
+<br>
+<br>
+<br>
+
+<form th:action="@{/group/{groupId}/album/{albumId}/song(groupId=${group.id}, albumId=${album.id})}" th:object="${song}" method="post">
+    <label for="name">Name:</label>
+    <input type="text" th:field="*{name}" id="name">
+    <br>
+    <label for="duration">Duration:</label>
+    <input type="text" th:field="*{duration}" id="duration">
+    <br>
+    <button type="submit">Add song</button>
+</form>
+
+<br>
+<br>
+<br>
+
+<form th:action="@{/group/{groupId}/album/{albumId}/song/del(groupId=${groupId}, albumId=${albumId})}" th:object="${song}" method="post">
+    <label for="idDel">Id:</label>
+    <input type="text"  th:field="*{id}" id="idDel">
+    <br>
+    <button type="submit">Delete song</button>
+</form>
+
+</body>
+</html>

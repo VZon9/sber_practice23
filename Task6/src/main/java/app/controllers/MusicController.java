@@ -78,12 +78,7 @@ public class MusicController {
 
     @GetMapping("/group/{groupId}/album/{albumId}/song/{songId}")
     public String getSong(@PathVariable int groupId, @PathVariable int albumId, @PathVariable int songId, Model model) {
-        Group group = service.getGroup(groupId);
-        Album album = service.getAlbum(groupId, albumId);
-        Song song = service.getSong(groupId, albumId, songId);
-        model.addAttribute("group", group);
-        model.addAttribute("album", album);
-        model.addAttribute("song", song);
+        model.addAttribute("song", service.getSong(groupId, albumId, songId));
         return "song";
     }
 

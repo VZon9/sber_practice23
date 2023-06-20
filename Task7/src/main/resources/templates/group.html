@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h2 th:text="${group.name}"></h2>
+<br>
+<li th:each="album : ${albums}">
+    <a th:href="@{/group/{groupId}/album/{albumId}(groupId=${group.id}, albumId=${album.id})}" th:text="${album.name}"></a>
+    <span>- <span th:text="${album.releaseYear}"></span></span>
+    <span>(Id:<span th:text="${album.id}"></span>)</span>
+</li>
+
+<br>
+<br>
+<br>
+
+<form th:action="@{/group/{groupId}/album(groupId=${group.id})}" th:object="${album}" method="post">
+    <label for="name">Name:</label>
+    <input type="text" th:field="*{name}" id="name">
+    <br>
+    <label for="year">Year:</label>
+    <input type="text" th:field="*{releaseYear}" id="year">
+    <br>
+    <button type="submit">Add album</button>
+</form>
+
+<br>
+<br>
+<br>
+
+<form th:action="@{/group/{groupId}/album/del(groupId=${groupId})}" th:object="${album}" method="post">
+    <label for="idDel">Id:</label>
+    <input type="text"  th:field="*{id}" id="idDel">
+    <br>
+    <button type="submit">Delete album</button>
+</form>
+
+</body>
+</html>
