@@ -1,5 +1,6 @@
 package app.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -9,11 +10,17 @@ public class Song {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private long groupId;
-    private long albumId;
 
     private String name;
     private String duration;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Album album;
+
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
 
     public long getId() {
         return id;
@@ -21,22 +28,6 @@ public class Song {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(long groupId) {
-        this.groupId = groupId;
-    }
-
-    public long getAlbumId() {
-        return albumId;
-    }
-
-    public void setAlbumId(long albumId) {
-        this.albumId = albumId;
     }
 
     public String getName() {

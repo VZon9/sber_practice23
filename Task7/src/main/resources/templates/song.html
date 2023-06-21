@@ -5,5 +5,12 @@
 <h2 th:text="${song.name}"></h2>
 <p>Duration: <span th:text="${song.duration}"></span></p>
 
+<br>
+<br>
+<br>
+
+<form th:action="@{/group/{groupId}/album/{albumId}(groupId=${groupId}, albumId=${albumId})}">
+    <button>Back to album</button>
+</form>
 </body>
 </html>

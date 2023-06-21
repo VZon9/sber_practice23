@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<h2 th:text="${album.name}"></h2>
+<h2 th:text="${albumName}"></h2>
 <br>
 <li th:each="song : ${songs}">
-    <a th:href="@{/group/{groupId}/album/{albumId}/song/{songId}(groupId=${group.id}, albumId=${album.id}, songId=${song.id})}" th:text="${song.name}"></a>
+    <a th:href="@{/group/{groupId}/album/{albumId}/song/{songId}(groupId=${groupId}, albumId=${albumId}, songId=${song.id})}" th:text="${song.name}"></a>
     <span>(Id:<span th:text="${song.id}"></span>)</span>
 </li>
 
@@ -12,7 +12,7 @@
 <br>
 <br>
 
-<form th:action="@{/group/{groupId}/album/{albumId}/song(groupId=${group.id}, albumId=${album.id})}" th:object="${song}" method="post">
+<form th:action="@{/group/{groupId}/album/{albumId}/song(groupId=${groupId}, albumId=${albumId})}" th:object="${song}" method="post">
     <label for="name">Name:</label>
     <input type="text" th:field="*{name}" id="name">
     <br>
@@ -31,6 +31,14 @@
     <input type="text"  th:field="*{id}" id="idDel">
     <br>
     <button type="submit">Delete song</button>
+</form>
+
+<br>
+<br>
+<br>
+
+<form th:action="@{/group/{groupId}(groupId=${groupId})}">
+    <button>Back to group</button>
 </form>
 
 </body>

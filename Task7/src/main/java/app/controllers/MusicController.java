@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Optional;
+
 @Controller
 public class MusicController {
 
@@ -47,51 +49,55 @@ public class MusicController {
 
     @GetMapping("/group/{groupId}")
     public String getGroup(@PathVariable long groupId, Model model){
-        model.addAttribute("albums", albumRepository.findByGroupId(groupId));
-        model.addAttribute("group", groupRepository.findById(groupId).get());
+        Group group = groupRepository.findById(groupId).get();
+        model.addAttribute("albums", group.getAlbums());
+        model.addAttribute("groupName", group.getName());
         model.addAttribute("album", new Album());
         return "group";
     }
 
     @PostMapping("/group/{groupId}/album")
     public String addAlbum(@PathVariable long groupId, @ModelAttribute Album album) {
-        album.setGroupId(groupId);
+        groupRepository.findById(groupId).get().addAlbum(album);
         albumRepository.save(album);
         return "redirect:/group/" + groupId;
     }
 
     @PostMapping("/group/{groupId}/album/del")
     public String delAlbum(@PathVariable long groupId, @ModelAttribute Album album){
-        albumRepository.deleteById(album.getId());
+        Album albumDel = albumRepository.findById(album.getId()).get();
+        groupRepository.findById(groupId).get().removeAlbum(albumDel);
+        albumRepository.deleteById(albumDel.getId());
         return "redirect:/group/" + groupId;
     }
 
     @GetMapping("/group/{groupId}/album/{albumId}")
     public String getAlbum(@PathVariable long groupId, @PathVariable long albumId, Model model){
-        model.addAttribute("songs", songRepository.findByGroupIdAndAlbumId(groupId, albumId));
-        model.addAttribute("group", groupRepository.findById(groupId).get());
-        model.addAttribute("album", albumRepository.findByGroupIdAndId(groupId, albumId));
+        Album album = albumRepository.findById(albumId).get();
+        model.addAttribute("songs", album.getSongs());
+        model.addAttribute("albumName", album.getName());
         model.addAttribute("song", new Song());
         return "album";
     }
 
     @PostMapping("/group/{groupId}/album/{albumId}/song")
     public String addSong(@PathVariable long groupId, @PathVariable long albumId, @ModelAttribute Song song) {
-        song.setGroupId(groupId);
-        song.setAlbumId(albumId);
+        albumRepository.findById(albumId).get().addSong(song);
         songRepository.save(song);
         return "redirect:/group/" + groupId + "/album/" + albumId;
     }
 
     @PostMapping("/group/{groupId}/album/{albumId}/song/del")
     public String delSong(@PathVariable long groupId, @PathVariable long albumId, @ModelAttribute Song song) {
-        songRepository.deleteById(song.getId());
+        Song songDel = songRepository.findById(song.getId()).get();
+        albumRepository.findById(albumId).get().removeSong(songDel);
+        songRepository.deleteById(songDel.getId());
         return "redirect:/group/" + groupId + "/album/" + albumId;
     }
 
     @GetMapping("/group/{groupId}/album/{albumId}/song/{songId}")
     public String getSong(@PathVariable long groupId, @PathVariable long albumId, @PathVariable long songId, Model model) {
-        model.addAttribute("song", songRepository.findByGroupIdAndAlbumIdAndId(groupId, albumId, songId));
+        model.addAttribute("song", songRepository.findById(songId).get());
         return "song";
     }
 
