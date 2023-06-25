@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
@@ -29,9 +30,15 @@ public class MusicController {
     private SongRepository songRepository;
 
     @GetMapping("/home")
-    public String getAllGroups(Model model){
+    public String getAllGroups(Model model, Principal principal){
         model.addAttribute("groups", groupRepository.findAll());
         model.addAttribute("group", new Group());
+        if(principal != null) {
+            model.addAttribute("isLogIn", true);
+        }
+        else {
+            model.addAttribute("isLogIn", false);
+        }
         return "home";
     }
 
@@ -48,11 +55,17 @@ public class MusicController {
     }
 
     @GetMapping("/group/{groupId}")
-    public String getGroup(@PathVariable long groupId, Model model){
+    public String getGroup(@PathVariable long groupId, Model model, Principal principal){
         Group group = groupRepository.findById(groupId).get();
         model.addAttribute("albums", group.getAlbums());
         model.addAttribute("groupName", group.getName());
         model.addAttribute("album", new Album());
+        if(principal != null) {
+            model.addAttribute("isLogIn", true);
+        }
+        else {
+            model.addAttribute("isLogIn", false);
+        }
         return "group";
     }
 
@@ -72,11 +85,17 @@ public class MusicController {
     }
 
     @GetMapping("/group/{groupId}/album/{albumId}")
-    public String getAlbum(@PathVariable long groupId, @PathVariable long albumId, Model model){
+    public String getAlbum(@PathVariable long groupId, @PathVariable long albumId, Model model, Principal principal){
         Album album = albumRepository.findById(albumId).get();
         model.addAttribute("songs", album.getSongs());
         model.addAttribute("albumName", album.getName());
         model.addAttribute("song", new Song());
+        if(principal != null) {
+            model.addAttribute("isLogIn", true);
+        }
+        else {
+            model.addAttribute("isLogIn", false);
+        }
         return "album";
     }
 
@@ -96,9 +115,20 @@ public class MusicController {
     }
 
     @GetMapping("/group/{groupId}/album/{albumId}/song/{songId}")
-    public String getSong(@PathVariable long groupId, @PathVariable long albumId, @PathVariable long songId, Model model) {
+    public String getSong(@PathVariable long groupId, @PathVariable long albumId, @PathVariable long songId, Model model, Principal principal) {
         model.addAttribute("song", songRepository.findById(songId).get());
+        if(principal != null) {
+            model.addAttribute("isLogIn", true);
+        }
+        else {
+            model.addAttribute("isLogIn", false);
+        }
         return "song";
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
     }
 
 }

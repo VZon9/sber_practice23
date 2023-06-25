@@ -1,38 +1,59 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
+<hr>
+<div style="display: flex; height: 10vh; position: relative;">
+    <div style="position: absolute;top: 50%;transform: translate(0, -50%);">
+        <h1>MusicWebApp</h1>
+    </div>
+    <div th:switch="${isLogIn}">
+        <div th:case="false" style="position: absolute; right: 0;bottom:0">
+            <form action="/login" method="get">
+                <button type="submit">Log in</button>
+            </form>
+        </div>
+
+        <div th:case="true" style="position: absolute; right: 0;bottom:0">
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Log Out"/>
+            </form>
+        </div>
+    </div>
+</div>
+<hr>
 <h2 th:text="${groupName}"></h2>
 <br>
 <li th:each="album : ${albums}">
     <a th:href="@{/group/{groupId}/album/{albumId}(groupId=${groupId}, albumId=${album.id})}" th:text="${album.name}"></a>
     <span>- <span th:text="${album.releaseYear}"></span></span>
-    <span>(Id:<span th:text="${album.id}"></span>)</span>
+    <span th:if="${isLogIn}">(Id:<span th:text="${album.id}"></span>)</span>
 </li>
-
-<br>
-<br>
-<br>
-
-<form th:action="@{/group/{groupId}/album(groupId=${groupId})}" th:object="${album}" method="post">
-    <label for="name">Name:</label>
-    <input type="text" th:field="*{name}" id="name">
+<div th:if="${isLogIn}">
     <br>
-    <label for="year">Year:</label>
-    <input type="text" th:field="*{releaseYear}" id="year">
     <br>
-    <button type="submit">Add album</button>
-</form>
-
-<br>
-<br>
-<br>
-
-<form th:action="@{/group/{groupId}/album/del(groupId=${groupId})}" th:object="${album}" method="post">
-    <label for="idDel">Id:</label>
-    <input type="text"  th:field="*{id}" id="idDel">
     <br>
-    <button type="submit">Delete album</button>
-</form>
+
+    <form th:action="@{/group/{groupId}/album(groupId=${groupId})}" th:object="${album}" method="post">
+        <label for="name">Name:</label>
+        <input type="text" th:field="*{name}" id="name">
+        <br>
+        <label for="year">Year:</label>
+        <input type="text" th:field="*{releaseYear}" id="year">
+        <br>
+        <button type="submit">Add album</button>
+    </form>
+
+    <br>
+    <br>
+    <br>
+
+    <form th:action="@{/group/{groupId}/album/del(groupId=${groupId})}" th:object="${album}" method="post">
+        <label for="idDel">Id:</label>
+        <input type="text"  th:field="*{id}" id="idDel">
+        <br>
+        <button type="submit">Delete album</button>
+    </form>
+</div>
 
 <br>
 <br>
@@ -41,6 +62,5 @@
 <form th:action="@{/home}">
     <button>Back to all groups</button>
 </form>
-
 </body>
 </html>

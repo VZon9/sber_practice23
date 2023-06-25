@@ -1,7 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
+<hr>
+<div style="display: flex; height: 10vh; position: relative;">
+    <div style="position: absolute;top: 50%;transform: translate(0, -50%);">
+        <h1>MusicWebApp</h1>
+    </div>
+    <div th:switch="${isLogIn}">
+        <div th:case="false" style="position: absolute; right: 0;bottom:0">
+            <form action="/login" method="get">
+                <button type="submit">Log in</button>
+            </form>
+        </div>
 
+        <div th:case="true" style="position: absolute; right: 0;bottom:0">
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Log Out"/>
+            </form>
+        </div>
+    </div>
+</div>
+<hr>
 <h2 th:text="${song.name}"></h2>
 <p>Duration: <span th:text="${song.duration}"></span></p>
 

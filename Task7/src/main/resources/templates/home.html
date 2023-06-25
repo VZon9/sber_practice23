@@ -1,34 +1,55 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
+<hr>
+<div style="display: flex; height: 10vh; position: relative;">
+    <div style="position: absolute;top: 50%;transform: translate(0, -50%);">
+        <h1>MusicWebApp</h1>
+    </div>
+    <div th:switch="${isLogIn}">
+        <div th:case="false" style="position: absolute; right: 0;bottom:0">
+            <form action="/login" method="get">
+                <button type="submit">Log in</button>
+            </form>
+        </div>
+
+        <div th:case="true" style="position: absolute; right: 0;bottom:0">
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Log Out"/>
+            </form>
+        </div>
+    </div>
+</div>
+<hr>
 <h2>Groups:</h2>
 <br>
 <li th:each="group : ${groups}">
     <a th:href="@{/group/{groupId}(groupId=${group.id})}" th:text="${group.name}"></a>
-    <span>(Id:<span th:text="${group.id}"></span>)</span>
+    <span th:if="${isLogIn}">(Id:<span th:text="${group.id}"></span>)</span>
 </li>
 
-<br>
-<br>
-<br>
-
-<form th:action="@{/group}" th:object="${group}" method="post">
-    <label for="name">Name</label>
-    <input type="text" th:field="*{name}" id="name">
+<div th:if="${isLogIn}">
     <br>
-    <button type="submit">Add group</button>
-</form>
-
-<br>
-<br>
-<br>
-
-<form th:action="@{/group/del}" th:object="${group}" method="post">
-    <label for="idDel">Id:</label>
-    <input type="text"  th:field="*{id}" id="idDel">
     <br>
-    <button type="submit">Delete group</button>
-</form>
+    <br>
 
+    <form th:action="@{/group}" th:object="${group}" method="post">
+        <label for="name">Name</label>
+        <input type="text" th:field="*{name}" id="name">
+        <br>
+        <button type="submit">Add group</button>
+    </form>
+
+    <br>
+    <br>
+    <br>
+
+    <form th:action="@{/group/del}" th:object="${group}" method="post">
+        <label for="idDel">Id:</label>
+        <input type="text"  th:field="*{id}" id="idDel">
+        <br>
+        <button type="submit">Delete group</button>
+    </form>
+</div>
 </body>
 </html>
